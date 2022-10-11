@@ -6,15 +6,16 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.*
 import common.CourtManager
 import common.Reservation
 import common.ReservationManager
 import java.util.Calendar
 
+val dialogState = mutableStateOf(DialogState.CardReader)
 @Composable
 fun PingPongReservationSystem() {
+
     Row {
         Column {
             LazyRow {
@@ -46,4 +47,19 @@ fun PingPongReservationSystem() {
 @Composable
 fun PingPongReservationSystemPreview() {
     PingPongReservationSystem()
+}
+
+enum class DialogState{
+    CardReader,
+    EquipmentDamageForm,
+    EndConfirmation,
+    ReserveConfirmation,
+}
+
+fun endFlow(){
+
+}
+
+fun reservationFlow(){
+
 }
