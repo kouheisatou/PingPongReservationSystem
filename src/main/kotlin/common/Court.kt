@@ -1,17 +1,17 @@
 package common
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+
 class Court(val name: String) {
-    var playingUser: Reservation? = null
-        get() {return field}
-        private set(value) {
-            field = value
-        }
+    var playingUser = mutableStateOf<Reservation?>(null)
 
     fun startPlaying(user: Reservation){
-        this.playingUser = user
+        this.playingUser.value = user
     }
 
     fun finishPlaying(){
-
+        this.playingUser.value = null
+        ReservationManager.allocateFirst()
     }
 }

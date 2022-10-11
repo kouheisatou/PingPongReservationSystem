@@ -3,30 +3,37 @@ package components
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
 import common.CourtManager
+import common.Reservation
 import common.ReservationManager
+import java.util.Calendar
 
 @Composable
-fun PingPongReservationSystem(){
+fun PingPongReservationSystem() {
     Row {
         Column {
-            Row {
-                CourtManager.courts.forEach {
-                    CourtComponent(it)
+            LazyRow {
+                items(CourtManager.courts.size) { index ->
+                    CourtComponent(CourtManager.courts[index])
                 }
             }
-            Button(onClick = {}){
+            Button(onClick = {}) {
                 Text("備品の破損")
             }
-            Button(onClick = {}){
+            Button(onClick = {}) {
                 Text("お問い合わせ")
             }
         }
         Column {
-            Button(onClick = {}){
+            Button(onClick = {
+                // TODO 学籍番号をカードリーダーから取得
+                ReservationManager.reserve(Calendar.getInstance().timeInMillis.toString())
+            }) {
                 Text("予約する")
             }
             Text("予約リスト")
@@ -37,6 +44,6 @@ fun PingPongReservationSystem(){
 
 @Preview
 @Composable
-fun PingPongReservationSystemPreview(){
+fun PingPongReservationSystemPreview() {
     PingPongReservationSystem()
 }

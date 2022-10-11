@@ -12,12 +12,12 @@ import common.Reservation
 fun CourtComponent(court: Court) {
     Column {
         Text(court.name)
-        if (court.playingUser == null) {
+        if (court.playingUser.value == null) {
             Text("空き")
         } else {
             Text("利用中")
-            Text(court.playingUser!!.studentId)
-            Text("${court.playingUser!!.playStartTime?.time} ~ ${court.playingUser!!.playLimitTime?.time}")
+            Text(court.playingUser.value!!.studentId)
+            Text("${court.playingUser.value!!.playStartTime?.time} ~ ${court.playingUser.value!!.playLimitTime?.time}")
             Button(
                 onClick = {
                     court.finishPlaying()
