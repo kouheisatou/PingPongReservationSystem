@@ -1,7 +1,7 @@
 package common
 
 object ReservationManager {
-    private val reservations: MutableList<Reservation> = mutableListOf()
+    val reservations: MutableList<Reservation> = mutableListOf()
 
     fun reserve(reservation: Reservation){
         reservations.add(reservation)

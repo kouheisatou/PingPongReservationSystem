@@ -1,10 +1,14 @@
 package common
 
 class Court(val name: String) {
-    val user: Reservation? = null
+    var playingUser: Reservation? = null
+        get() {return field}
+        private set(value) {
+            field = value
+        }
 
-    fun startPlaying(){
-
+    fun startPlaying(user: Reservation){
+        this.playingUser = user
     }
 
     fun finishPlaying(){
