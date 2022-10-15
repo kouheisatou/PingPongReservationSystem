@@ -10,37 +10,30 @@ class EquipmentDamageQuestionDialog(
 
     dialogManager: DialogManager,
     positiveButtonAction: (() -> Unit)?,
-    negativeButtonAction: (() -> Unit)?,
+    negativeButtonAction: () -> Unit,
 ) : Dialog(dialogManager, positiveButtonAction, negativeButtonAction){
 
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun EquipmentDamageQuestionDialogComponent(
     dialogModel: EquipmentDamageQuestionDialog
 ) {
-    AlertDialog(
-
-        title = { Text("予約") },
-        text = { Text("予約しました") },
-        onDismissRequest = {},
-        buttons = {
+    DialogComponent(
+        dialogModel,
+        "消耗品の交換",
+        "交換が必要な消耗品はありますか？",
+        positiveButton = {
             Button(onClick = {
                 dialogModel.onPositiveButtonPressed()
             }) {
                 Text("はい")
             }
-            Button(onClick = {
-                dialogModel.onNegativeButtonPressed()
-            }) {
+        },
+        negativeButton = {
+            Button(onClick = { dialogModel.onNegativeButtonPressed() }) {
                 Text("いいえ")
             }
-        },
+        }
     )
-
-}
-
-enum class Selection{
-    Positive, Negative
 }

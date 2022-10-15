@@ -1,6 +1,7 @@
 package components.dialogs
 
 import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -8,7 +9,7 @@ import androidx.compose.runtime.Composable
 class ReserveConfirmationDialog(
     dialogManager: DialogManager,
     positiveButtonAction: (() -> Unit)?,
-    negativeButtonAction: (() -> Unit)?,
+    negativeButtonAction: () -> Unit,
 ) : Dialog(dialogManager, positiveButtonAction, negativeButtonAction) {
 
 }
@@ -19,11 +20,15 @@ fun ReserveConfirmationDialogComponent(
     dialogModel: ReserveConfirmationDialog
 ) {
 
-    AlertDialog(
-
-        title = { Text("予約") },
-        text = { Text("予約しました") },
-        onDismissRequest = {},
-        buttons = {},
+    DialogComponent(
+        dialogModel,
+        "予約",
+        "予約しました",
+        positiveButton = {
+            Button(onClick = {dialogModel.onPositiveButtonPressed()}){
+                Text("OK")
+            }
+        },
+        negativeButton = null,
     )
 }
