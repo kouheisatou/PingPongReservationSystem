@@ -1,6 +1,7 @@
 package common
 
 import androidx.compose.runtime.mutableStateListOf
+import components.Reservation
 
 object ReservationManager {
     val reservations = mutableStateListOf<Reservation>()

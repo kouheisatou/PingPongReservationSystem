@@ -1,6 +1,5 @@
 package components
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyRow
@@ -8,11 +7,10 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import common.CourtManager
-import common.Reservation
 import common.ReservationManager
+import components.dialogs.*
 import java.util.Calendar
 
-val dialogState = mutableStateOf(DialogState.CardReader)
 @Composable
 fun PingPongReservationSystem() {
 
@@ -23,7 +21,11 @@ fun PingPongReservationSystem() {
                     CourtComponent(CourtManager.courts[index])
                 }
             }
-            Button(onClick = {}) {
+            Button(onClick = {
+                EquipmentDamageFormDialog(
+                    DialogManager, positiveButtonAction = {}, negativeButtonAction = {},
+                ).show()
+            }) {
                 Text("備品の破損")
             }
             Button(onClick = {}) {
@@ -32,8 +34,13 @@ fun PingPongReservationSystem() {
         }
         Column {
             Button(onClick = {
-                // TODO 学籍番号をカードリーダーから取得
-                ReservationManager.reserve(Calendar.getInstance().timeInMillis.toString())
+                CardReaderDialog(
+                    DialogManager,
+                    positiveButtonAction = {
+                        ReservationManager.reserve(Calendar.getInstance().timeInMillis.toString())
+                    },
+                    negativeButtonAction = {},
+                ).show()
             }) {
                 Text("予約する")
             }
@@ -41,25 +48,24 @@ fun PingPongReservationSystem() {
             ReservationListComponent(ReservationManager.reservations)
         }
     }
-}
 
-@Preview
-@Composable
-fun PingPongReservationSystemPreview() {
-    PingPongReservationSystem()
-}
-
-enum class DialogState{
-    CardReader,
-    EquipmentDamageForm,
-    EndConfirmation,
-    ReserveConfirmation,
-}
-
-fun endFlow(){
-
-}
-
-fun reservationFlow(){
-
+    // showing dialog
+    when (DialogManager.currentDialog.value) {
+        is CardReaderDialog -> {
+            CardReaderDialogComponent(DialogManager.currentDialog.value as CardReaderDialog)
+        }
+        is QuitConfirmationDialog -> {
+            QuitConfirmationDialogComponent(DialogManager.currentDialog.value as QuitConfirmationDialog)
+        }
+        is EquipmentDamageFormDialog -> {
+            EquipmentDamageFormDialogComponent(DialogManager.currentDialog.value as EquipmentDamageFormDialog)
+        }
+        is EquipmentDamageQuestionDialog -> {
+            EquipmentDamageQuestionDialogComponent(DialogManager.currentDialog.value as EquipmentDamageQuestionDialog)
+        }
+        is ReserveConfirmationDialog -> {
+            ReserveConfirmationDialogComponent(DialogManager.currentDialog.value as ReserveConfirmationDialog)
+        }
+        else -> {}
+    }
 }
