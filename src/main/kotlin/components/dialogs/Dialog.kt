@@ -8,35 +8,49 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.coroutineContext
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 
 abstract class Dialog(
-    private val dialogManager: DialogManager,
+    private val nextDialogOnSelectedPositive: Dialog?,
+    private val nextDialogOnSelectedNegative: Dialog?,
     private val positiveButtonAction: (() -> Unit)?,
-    private val negativeButtonAction: () -> Unit,
+    private val negativeButtonAction: (() -> Unit)?,
+    private val cancelButtonAction: (() -> Unit)?,
 ) {
 
-    val isEnabledPositiveButton = positiveButtonAction != null
+    var selection: Selection? = null
+
+    var isEnabledPositiveButton = positiveButtonAction != null
+    var isEnabledNegativeButton = negativeButtonAction != null
 
     fun show() {
-        dialogManager.showDialog(this@Dialog)
+        DialogManager.showDialog(this@Dialog)
+    }
+
+    fun close() {
+        DialogManager.closeCurrentDialog()
     }
 
     open fun onPositiveButtonPressed() {
         positiveButtonAction?.invoke()
-        dialogManager.closeCurrentDialog()
+        selection = Selection.Positive
+        close()
+        nextDialogOnSelectedPositive?.show()
     }
 
     open fun onNegativeButtonPressed() {
-        negativeButtonAction()
-        dialogManager.closeCurrentDialog()
+        negativeButtonAction?.invoke()
+        selection = Selection.Negative
+        close()
+        nextDialogOnSelectedNegative?.show()
+    }
+
+    open fun onCancelButtonPressed(){
+        cancelButtonAction?.invoke()
+        selection = null
+        close()
     }
 }
-
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -44,8 +58,8 @@ fun DialogComponent(
     dialogModel: Dialog,
     title: String,
     text: String,
-    positiveButton: (@Composable () -> Unit)?,
-    negativeButton: (@Composable () -> Unit)?,
+    positiveButtonText: String,
+    negativeButtonText: String,
     additionalButtons: (@Composable () -> Unit)? = null,
 ) {
     AlertDialog(
@@ -59,12 +73,18 @@ fun DialogComponent(
             additionalButtons?.invoke()
 
             if (dialogModel.isEnabledPositiveButton) {
-                positiveButton?.invoke()
+                Button(onClick = {dialogModel.onPositiveButtonPressed()}){
+                    Text(positiveButtonText)
+                }
             }
 
-            negativeButton?.invoke()
+            if(dialogModel.isEnabledNegativeButton){
+                Button(onClick = {dialogModel.onNegativeButtonPressed()}){
+                    Text(negativeButtonText)
+                }
+            }
 
-            Button(onClick = { dialogModel.onNegativeButtonPressed() }) {
+            Button(onClick = { dialogModel.onCancelButtonPressed() }) {
                 Text("x")
             }
         },

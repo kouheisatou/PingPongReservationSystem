@@ -5,19 +5,18 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import common.CourtManager
 import common.ReservationManager
-import components.dialogs.DialogManager
-import components.dialogs.QuitConfirmationDialog
+import components.dialogs.*
 
 class Court(val name: String) {
     var playingUser = mutableStateOf<Reservation?>(null)
 
-    fun startPlaying(user: Reservation){
+    fun startPlaying(user: Reservation) {
         this.playingUser.value = user
     }
 
-    fun finishPlaying(){
+    fun finishPlaying() {
         this.playingUser.value = null
         ReservationManager.allocateFirst()
     }
@@ -35,9 +34,26 @@ fun CourtComponent(court: Court) {
             Text("${court.playingUser.value!!.startTime?.time} ~ ${court.playingUser.value!!.playLimitTime?.time}")
             Button(
                 onClick = {
-                    court.finishPlaying()
-                    QuitConfirmationDialog(
-                        DialogManager, positiveButtonAction = {}, negativeButtonAction = {},
+                    CardReaderDialog(
+                        nextDialog = EquipmentDamageQuestionDialog(
+                            nextDialogOnSelectedPositive = EquipmentDamageFormDialog(
+                                nextDialog = QuitConfirmationDialog(),
+                                positiveButtonAction = {
+                                    court.finishPlaying()
+                                },
+                                null,
+                                null,
+                            ),
+                            nextDialogOnSelectedNegative = QuitConfirmationDialog(),
+                            positiveButtonAction = {},
+                            negativeButtonAction = {
+                                court.finishPlaying()
+                            },
+                            null,
+                        ),
+                        positiveButtonAction = {},
+                        null,
+                        null,
                     ).show()
                 },
             ) {

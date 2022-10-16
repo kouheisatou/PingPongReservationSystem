@@ -1,16 +1,15 @@
 package components.dialogs
 
-import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
 class EquipmentDamageFormDialog(
-    dialogManager: DialogManager,
+    nextDialog: Dialog?,
     positiveButtonAction: (() -> Unit)?,
-    negativeButtonAction: () -> Unit,
-) : Dialog(dialogManager, positiveButtonAction, negativeButtonAction) {
+    negativeButtonAction: (() -> Unit)?,
+    cancelButtonAction: (() -> Unit)?,
+) : Dialog( nextDialog, null, positiveButtonAction, negativeButtonAction, cancelButtonAction) {
 
 }
 
@@ -22,15 +21,7 @@ fun EquipmentDamageFormDialogComponent(
         dialogModel,
         "消耗品の申告",
         "消耗品を選択してください",
-        positiveButton = {
-            Button(onClick = {dialogModel.onPositiveButtonPressed()}){
-                Text("確定")
-            }
-        },
-        negativeButton = {
-            Button(onClick = { dialogModel.onNegativeButtonPressed() }) {
-                Text("キャンセル")
-            }
-        }
+        positiveButtonText = "送信",
+        negativeButtonText = "キャンセル",
     )
 }

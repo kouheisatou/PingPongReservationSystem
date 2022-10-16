@@ -9,10 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 class CardReaderDialog(
-    dialogManager: DialogManager,
+    nextDialog: Dialog?,
     positiveButtonAction: (() -> Unit)?,
-    negativeButtonAction: () -> Unit,
-) : Dialog(dialogManager, positiveButtonAction, negativeButtonAction) {
+    negativeButtonAction: (() -> Unit)?,
+    cancelButtonAction: (() -> Unit)?,
+) : Dialog(nextDialog, null, positiveButtonAction, negativeButtonAction, cancelButtonAction) {
 
     override fun onPositiveButtonPressed() {
         super.onPositiveButtonPressed()
@@ -26,16 +27,8 @@ fun CardReaderDialogComponent(cardReaderDialog: CardReaderDialog) {
         cardReaderDialog,
         "学籍番号確認",
         "学生証をカードリーダーにかざしてください",
-        positiveButton = {
-            Button(onClick = {cardReaderDialog.onPositiveButtonPressed()}){
-                Text("学生証かざした（仮）")
-            }
-        },
-        negativeButton = {
-            Button(onClick = { cardReaderDialog.onNegativeButtonPressed() }) {
-                Text("キャンセル")
-            }
-        }
+        positiveButtonText = "学生証かざした（仮）",
+        negativeButtonText = "キャンセル",
     )
 }
 

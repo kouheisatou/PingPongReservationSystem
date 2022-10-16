@@ -22,9 +22,7 @@ fun PingPongReservationSystem() {
                 }
             }
             Button(onClick = {
-                EquipmentDamageFormDialog(
-                    DialogManager, positiveButtonAction = {}, negativeButtonAction = {},
-                ).show()
+                EquipmentDamageFormDialog(null, {}, {}, null).show()
             }) {
                 Text("備品の破損")
             }
@@ -35,11 +33,12 @@ fun PingPongReservationSystem() {
         Column {
             Button(onClick = {
                 CardReaderDialog(
-                    DialogManager,
+                    ReserveConfirmationDialog(),
                     positiveButtonAction = {
-                        ReservationManager.reserve(Calendar.getInstance().timeInMillis.toString())
+                        ReservationManager.reserve("aa20000")
                     },
-                    negativeButtonAction = {},
+                    null,
+                    null,
                 ).show()
             }) {
                 Text("予約する")

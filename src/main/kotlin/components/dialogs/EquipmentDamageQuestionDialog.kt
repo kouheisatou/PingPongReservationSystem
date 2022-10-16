@@ -7,11 +7,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
 class EquipmentDamageQuestionDialog(
-
-    dialogManager: DialogManager,
+    nextDialogOnSelectedPositive: Dialog?,
+    nextDialogOnSelectedNegative: Dialog?,
     positiveButtonAction: (() -> Unit)?,
-    negativeButtonAction: () -> Unit,
-) : Dialog(dialogManager, positiveButtonAction, negativeButtonAction){
+    negativeButtonAction: (() -> Unit)?,
+    cancelButtonAction: (() -> Unit)?,
+) : Dialog(nextDialogOnSelectedPositive, nextDialogOnSelectedNegative, positiveButtonAction, negativeButtonAction, cancelButtonAction){
 
 }
 
@@ -23,17 +24,7 @@ fun EquipmentDamageQuestionDialogComponent(
         dialogModel,
         "消耗品の交換",
         "交換が必要な消耗品はありますか？",
-        positiveButton = {
-            Button(onClick = {
-                dialogModel.onPositiveButtonPressed()
-            }) {
-                Text("はい")
-            }
-        },
-        negativeButton = {
-            Button(onClick = { dialogModel.onNegativeButtonPressed() }) {
-                Text("いいえ")
-            }
-        }
+        positiveButtonText = "はい",
+        negativeButtonText = "いいえ",
     )
 }
