@@ -64,6 +64,9 @@ fun PingPongReservationSystem() {
         is ReserveConfirmationDialog -> {
             ReserveConfirmationDialogComponent(DialogManager.currentDialog.value as ReserveConfirmationDialog)
         }
+        is CancelConfirmationDialog -> {
+            CcancelConfirmationDialogComponent(DialogManager.currentDialog.value as CancelConfirmationDialog)
+        }
         else -> {}
     }
 }
