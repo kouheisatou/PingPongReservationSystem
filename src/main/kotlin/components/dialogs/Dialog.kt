@@ -31,18 +31,23 @@ abstract class Dialog(
         DialogManager.closeCurrentDialog()
     }
 
+    fun showNextDialog(selection: Selection){
+        this.selection = selection
+        close()
+        when(selection){
+            Selection.Positive -> nextDialogOnSelectedPositive?.show()
+            Selection.Negative -> nextDialogOnSelectedNegative?.show()
+        }
+    }
+
     open fun onPositiveButtonPressed() {
         positiveButtonAction?.invoke()
-        selection = Selection.Positive
-        close()
-        nextDialogOnSelectedPositive?.show()
+        showNextDialog(Selection.Positive)
     }
 
     open fun onNegativeButtonPressed() {
         negativeButtonAction?.invoke()
-        selection = Selection.Negative
-        close()
-        nextDialogOnSelectedNegative?.show()
+        showNextDialog(Selection.Negative)
     }
 
     open fun onCancelButtonPressed(){

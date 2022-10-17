@@ -34,11 +34,10 @@ fun PingPongReservationSystem() {
             Button(onClick = {
                 CardReaderDialog(
                     ReserveConfirmationDialog(),
-                    positiveButtonAction = {
-                        ReservationManager.reserve("aa20000")
+                    onCardScanned = { studentId ->
+                        ReservationManager.reserve(studentId)
+                        Result.Succeeded
                     },
-                    null,
-                    null,
                 ).show()
             }) {
                 Text("予約する")

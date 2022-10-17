@@ -51,9 +51,13 @@ fun CourtComponent(court: Court) {
                             },
                             null,
                         ),
-                        positiveButtonAction = {},
-                        null,
-                        null,
+                        onCardScanned = { studentId ->
+                            if(court.playingUser.value?.studentId == studentId){
+                                Result.Succeeded
+                            }else{
+                                Result.Failed
+                            }
+                        }
                     ).show()
                 },
             ) {

@@ -6,6 +6,9 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import common.ReservationManager
+import components.dialogs.CancelConfirmationDialog
+import components.dialogs.CardReaderDialog
+import components.dialogs.Result
 import java.util.Calendar
 
 class Reservation(val studentId: String) {
@@ -31,7 +34,17 @@ fun ReservationRowComponent(reservation: Reservation){
         Text(reservation.studentId)
         Text(reservation.reservationTime.time.toString())
         Button(onClick = {
-            ReservationManager.cancel(reservation)
+            CardReaderDialog(
+                nextDialog = CancelConfirmationDialog(),
+                onCardScanned = { studentId ->
+                    if(studentId == reservation.studentId){
+                        ReservationManager.cancel(reservation)
+                        Result.Succeeded
+                    }else{
+                        Result.Failed
+                    }
+                },
+            ).show()
         }){
             Text("キャンセル")
         }
