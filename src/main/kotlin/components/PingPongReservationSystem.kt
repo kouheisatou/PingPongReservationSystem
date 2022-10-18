@@ -9,7 +9,6 @@ import androidx.compose.runtime.*
 import common.CourtManager
 import common.ReservationManager
 import components.dialogs.*
-import java.util.Calendar
 
 @Composable
 fun PingPongReservationSystem() {
@@ -36,7 +35,7 @@ fun PingPongReservationSystem() {
                     ReserveConfirmationDialog(),
                     onCardScanned = { studentId ->
                         ReservationManager.reserve(studentId)
-                        Result.Succeeded
+                        CardReaderResult.Succeeded
                     },
                 ).show()
             }) {

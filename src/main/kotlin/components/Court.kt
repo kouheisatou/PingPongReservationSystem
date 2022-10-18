@@ -5,7 +5,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import common.CourtManager
 import common.ReservationManager
 import components.dialogs.*
 
@@ -53,9 +52,9 @@ fun CourtComponent(court: Court) {
                         ),
                         onCardScanned = { studentId ->
                             if(court.playingUser.value?.studentId == studentId){
-                                Result.Succeeded
+                                CardReaderResult.Succeeded
                             }else{
-                                Result.Failed
+                                CardReaderResult.Failed
                             }
                         }
                     ).show()

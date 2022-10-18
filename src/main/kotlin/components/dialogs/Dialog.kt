@@ -23,11 +23,11 @@ abstract class Dialog(
     var isEnabledPositiveButton = positiveButtonAction != null
     var isEnabledNegativeButton = negativeButtonAction != null
 
-    fun show() {
+    open fun show() {
         DialogManager.showDialog(this@Dialog)
     }
 
-    fun close() {
+    open fun close() {
         DialogManager.closeCurrentDialog()
     }
 

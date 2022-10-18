@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import common.ReservationManager
 import components.dialogs.CancelConfirmationDialog
 import components.dialogs.CardReaderDialog
-import components.dialogs.Result
+import components.dialogs.CardReaderResult
 import java.util.Calendar
 
 class Reservation(val studentId: String) {
@@ -39,9 +39,9 @@ fun ReservationRowComponent(reservation: Reservation){
                 onCardScanned = { studentId ->
                     if(studentId == reservation.studentId){
                         ReservationManager.cancel(reservation)
-                        Result.Succeeded
+                        CardReaderResult.Succeeded
                     }else{
-                        Result.Failed
+                        CardReaderResult.Failed
                     }
                 },
             ).show()

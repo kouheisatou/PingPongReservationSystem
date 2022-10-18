@@ -39,7 +39,7 @@ class RCS300 {
 
     init {
         if (pasoriHandle == null) {
-            throw FelicaException("felicalib.dllを開けません")
+            throw FelicaException("felicalib64.dllを開けません")
         }
         if (FelicaLib.INSTANCE.pasori_init(pasoriHandle) != 0) {
             throw FelicaException("PaSoRiに接続できません")
@@ -47,9 +47,9 @@ class RCS300 {
     }
 
     fun close() {
-        if (felicaHandle !== Pointer.NULL) {
-            FelicaLib.INSTANCE.felica_free(felicaHandle)
-        }
+//        if (felicaHandle !== Pointer.NULL) {
+//            FelicaLib.INSTANCE.felica_free(felicaHandle)
+//        }
         if (pasoriHandle !== Pointer.NULL) {
             FelicaLib.INSTANCE.pasori_close(pasoriHandle)
         }
