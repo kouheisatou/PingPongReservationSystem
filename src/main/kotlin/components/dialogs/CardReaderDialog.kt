@@ -20,9 +20,8 @@ class CardReaderDialog(
         // カードリーダを初期化
         try {
             rcS300 = RCS300()
-        } catch (e: RCS300.FelicaException) {
-            println("Cannot connect RC-S300")
-            e.printStackTrace()
+        } catch (e: Throwable) {
+            System.err.println("Cannot connect RC-S300")
             close()
         }
     }

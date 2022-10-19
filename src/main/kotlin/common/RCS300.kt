@@ -130,7 +130,7 @@ fun main() {
 
             }
         }
-    } catch (e: RCS300.FelicaException) {
+    } catch (e: Throwable) {
         System.err.println("Cannot access to RCS300")
     }
 }
