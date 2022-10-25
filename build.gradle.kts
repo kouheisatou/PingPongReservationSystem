@@ -32,7 +32,7 @@ compose.desktop {
         mainClass = "MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "PingPongReservationSystem"
+            packageName = "PingPongReservationSystemClient"
             packageVersion = "1.0.0"
         }
     }

@@ -11,7 +11,7 @@ import common.ReservationManager
 import components.dialogs.*
 
 @Composable
-fun PingPongReservationSystem() {
+fun PingPongReservationSystemClient() {
 
     Row {
         Column {

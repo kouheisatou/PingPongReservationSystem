@@ -6,5 +6,5 @@ pluginManagement {
     }
     
 }
-rootProject.name = "PingPongReservationSystem"
+rootProject.name = "PingPongReservationSystemClient"
 
